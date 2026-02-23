@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Special One ❤️</title>
+    <style>
+        :root {
+            --pink: #ff4d6d;
+            --soft-pink: #ffb3c1;
+            --bg: #fff0f3;
+        }
+
+        body {
+            margin: 0; height: 100vh; display: flex;
+            justify-content: center; align-items: center;
+            background: var(--bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            backdrop-filter: blur(10px); z-index: 10;
+            max-width: 400px; width: 90%;
+        }
+
+        h1 { color: var(--pink); font-size: 2rem; margin-bottom: 30px; }
+
+        /* Buttons Style */
+        .btn-group { display: flex; gap: 20px; justify-content: center; min-height: 60px; }
+        button {
+            padding: 15px 35px; font-size: 1.1rem; border-radius: 50px;
+            border: none; cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+        #yesBtn { background: var(--pink); color: white; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
+        #noBtn { background: #6c757d; color: white; position: absolute; }
+
+        /* Text Fade-in Animation */
+        .message-line {
+            opacity: 0;
+            display: block;
+            margin: 15px 0;
+            color: #444;
+            font-size: 1.2rem;
+            transform: translateY(10px);
+            transition: all 1s ease;
+        }
+
+        .message-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #success-page { display: none; }
+        .heart-rain { position: absolute; pointer-events: none; z-index: 5; }
+
+        .audio-player { margin-top: 25px; width: 100%; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="quiz-page">
+        <h1 id="question">Hye Eun လေး Telegram က ဆက်သွယ်ပေးမလား 🥰</h1>
+        <div class="btn-group">
+            <button id="yesBtn" onclick="startSurprise()">Yes! 😍</button>
+            <button id="noBtn" onmouseover="moveNo()">No 😜</button>
+        </div>
+    </div>
+
+    <div class="container" id="success-page">
+        <h1 style="font-size: 1.8rem;">I knew it! ❤️</h1>
+        
+        <span class="message-line" id="line1">Eun"လေးက အကို့ဘဝရဲ့ ကံကောင်းခြင်းပဲ... ✨</span>
+        <span class="message-line" id="line2">အမြဲတမ်း ပြုံးနေပေးပါနော်... 😊</span>
+        <span class="message-line" id="line3">အနားကို ဒီထပ်ပိုပြီး ရောက်လာခွင့်ပြုပါ... 💖</span>
+        <span class="message-line" id="line4">လက်ဆောင်အနေနဲ့ 💖</span>
+        <span class="message-line" id="line5">၀၀:၄၅ sec မှာ သီချင်းလေးဆိုပြထားတယ်</span>
+        <span class="message-line" id="line6">ပြုံးသွားဖို့ မျှော်လင့်ပါတယ်💖</span>
+
+        <audio id="bgMusic" class="audio-player" controls>
+           <source src="mylove.m4a" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        const TOKEN = '6042412831';
+        const CHAT_ID = 'tml_2002t';
+
+        function moveNo() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function startSurprise() {
+            // UI Switch
+            document.getElementById('quiz-page').style.display = 'none';
+            document.getElementById('success-page').style.display = 'block';
+
+            // Start Music
+            const music = document.getElementById('bgMusic');
+            music.play();
+
+            // Text Appear Sequence
+            setTimeout(() => document.getElementById('line1').classList.add('show'), 1000);
+            setTimeout(() => document.getElementById('line2').classList.add('show'), 3000);
+            setTimeout(() => document.getElementById('line3').classList.add('show'), 5000);
+            setTimeout(() => document.getElementById('line4').classList.add('show'), 7000);
+            setTimeout(() => document.getElementById('line5').classList.add('show'), 9000);
+            setTimeout(() => document.getElementById('line6').classList.add('show'), 11000);
+
+            // Telegram Noti
+            fetch(`https://api.telegram.org/bot${6042412831}/sendMessage?chat_id=${tml_2002t}&text=${encodeURIComponent("💌 အောင်မြင်ပြီ! သူမ 'Yes' လို့ ဖြေပြီး စာသားလေးတွေကို ဖတ်နေပြီနော်! ❤️")}`);
+
+            // Heart Animation
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-rain';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-20px';
+            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            document.body.appendChild(heart);
+
+            heart.animate([
+                { transform: 'translateY(0)', opacity: 1 },
+                { transform: 'translateY(110vh)', opacity: 0 }
+            ], { duration: 3000 });
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
